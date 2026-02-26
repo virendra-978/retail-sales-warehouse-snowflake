@@ -26,3 +26,11 @@ Bronze → Silver → Gold layered design
 ## Project Structure
 
 See `/sql` for implementation scripts.
+
+## Fact Table Grain
+
+FACT_SALES grain:
+One row per customer per store per transaction date.
+
+Measures:
+- sales_price (additive)
