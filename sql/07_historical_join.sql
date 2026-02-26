@@ -44,7 +44,17 @@ INSERT INTO SILVER.FACT_STAGE VALUES
 (101, 10, 700, '2021-01-10');
 
 -- Load the facts with surrogate keys
-
+CREATE OR REPLACE TABLE SILVER.FACT_SALES AS
+SELECT
+    d.customer_sk,
+    f.store_id,
+    f.sales_price,
+    f.transaction_date
+FROM SILVER.FACT_STAGE f
+JOIN SILVER.CUSTOMER_DIM d
+    ON f.customer_id = d.customer_id
+    AND f.transaction_date >= d.start_date
+    AND (f.transaction_date < d.end_date OR d.end_date IS NULL);
 DROP TABLE IF EXISTS SILVER.CUSTOMER_DIM;
 
 CREATE OR REPLACE TABLE SILVER.CUSTOMER_DIM (
